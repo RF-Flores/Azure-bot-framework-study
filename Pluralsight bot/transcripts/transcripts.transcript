@@ -1,0 +1,182 @@
+[
+  {
+    "type": "conversationUpdate",
+    "membersAdded": [
+      {
+        "id": "eb99bd30-fc70-11eb-ac16-7bd148b49637",
+        "name": "Bot"
+      },
+      {
+        "id": "4116bb0f-6a79-40dc-8da9-1cab18e8660c",
+        "name": "User"
+      }
+    ],
+    "membersRemoved": [],
+    "channelId": "emulator",
+    "conversation": {
+      "id": "eb9a3260-fc70-11eb-8617-d1f051f8c6db|livechat"
+    },
+    "id": "eba13740-fc70-11eb-8617-d1f051f8c6db",
+    "localTimestamp": "2021-08-13T20:59:08+01:00",
+    "recipient": {
+      "id": "eb99bd30-fc70-11eb-ac16-7bd148b49637",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "timestamp": "2021-08-13T19:59:08.468Z",
+    "from": {
+      "id": "4116bb0f-6a79-40dc-8da9-1cab18e8660c",
+      "name": "User",
+      "role": "user"
+    },
+    "locale": "en-US",
+    "serviceUrl": "http://localhost:53420"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "http://localhost:53420",
+    "channelId": "emulator",
+    "from": {
+      "id": "eb99bd30-fc70-11eb-ac16-7bd148b49637",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "eb9a3260-fc70-11eb-8617-d1f051f8c6db|livechat"
+    },
+    "recipient": {
+      "id": "4116bb0f-6a79-40dc-8da9-1cab18e8660c",
+      "role": "user"
+    },
+    "locale": "en-US",
+    "text": "Hello and welcome!",
+    "speak": "Hello and welcome!",
+    "inputHint": "acceptingInput",
+    "attachments": [],
+    "entities": [],
+    "replyToId": "eba13740-fc70-11eb-8617-d1f051f8c6db",
+    "id": "ebfc4f90-fc70-11eb-8617-d1f051f8c6db",
+    "localTimestamp": "2021-08-13T20:59:09+01:00",
+    "timestamp": "2021-08-13T19:59:09.065Z"
+  },
+  {
+    "channelData": {
+      "clientActivityID": "1628884761185mdg0nie3alj",
+      "clientTimestamp": "2021-08-13T19:59:21.185Z"
+    },
+    "text": "Vai-te foder bino",
+    "textFormat": "plain",
+    "type": "message",
+    "channelId": "emulator",
+    "from": {
+      "id": "4116bb0f-6a79-40dc-8da9-1cab18e8660c",
+      "name": "User",
+      "role": "user"
+    },
+    "locale": "en-US",
+    "localTimestamp": "2021-08-13T20:59:21+01:00",
+    "localTimezone": "Europe/Lisbon",
+    "timestamp": "2021-08-13T19:59:21.211Z",
+    "entities": [
+      {
+        "requiresBotState": true,
+        "supportsListening": true,
+        "supportsTts": true,
+        "type": "ClientCapabilities"
+      }
+    ],
+    "conversation": {
+      "id": "eb9a3260-fc70-11eb-8617-d1f051f8c6db|livechat"
+    },
+    "id": "f339a4b0-fc70-11eb-8617-d1f051f8c6db",
+    "recipient": {
+      "id": "eb99bd30-fc70-11eb-ac16-7bd148b49637",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "serviceUrl": "http://localhost:53420"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "http://localhost:53420",
+    "channelId": "emulator",
+    "from": {
+      "id": "eb99bd30-fc70-11eb-ac16-7bd148b49637",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "eb9a3260-fc70-11eb-8617-d1f051f8c6db|livechat"
+    },
+    "recipient": {
+      "id": "4116bb0f-6a79-40dc-8da9-1cab18e8660c",
+      "role": "user"
+    },
+    "locale": "en-US",
+    "text": "Echo: Vai-te foder bino",
+    "speak": "Echo: Vai-te foder bino",
+    "inputHint": "acceptingInput",
+    "attachments": [],
+    "entities": [],
+    "replyToId": "f339a4b0-fc70-11eb-8617-d1f051f8c6db",
+    "id": "f33e86b0-fc70-11eb-8617-d1f051f8c6db",
+    "localTimestamp": "2021-08-13T20:59:21+01:00",
+    "timestamp": "2021-08-13T19:59:21.243Z"
+  },
+  {
+    "channelData": {
+      "clientActivityID": "1628884770378flfoldiq89j",
+      "clientTimestamp": "2021-08-13T19:59:30.378Z"
+    },
+    "text": "Ai o caralho",
+    "textFormat": "plain",
+    "type": "message",
+    "channelId": "emulator",
+    "from": {
+      "id": "4116bb0f-6a79-40dc-8da9-1cab18e8660c",
+      "name": "User",
+      "role": "user"
+    },
+    "locale": "en-US",
+    "localTimestamp": "2021-08-13T20:59:30+01:00",
+    "localTimezone": "Europe/Lisbon",
+    "timestamp": "2021-08-13T19:59:30.416Z",
+    "conversation": {
+      "id": "eb9a3260-fc70-11eb-8617-d1f051f8c6db|livechat"
+    },
+    "id": "f8b63700-fc70-11eb-8617-d1f051f8c6db",
+    "recipient": {
+      "id": "eb99bd30-fc70-11eb-ac16-7bd148b49637",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "serviceUrl": "http://localhost:53420"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "http://localhost:53420",
+    "channelId": "emulator",
+    "from": {
+      "id": "eb99bd30-fc70-11eb-ac16-7bd148b49637",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "eb9a3260-fc70-11eb-8617-d1f051f8c6db|livechat"
+    },
+    "recipient": {
+      "id": "4116bb0f-6a79-40dc-8da9-1cab18e8660c",
+      "role": "user"
+    },
+    "locale": "en-US",
+    "text": "Echo: Ai o caralho",
+    "speak": "Echo: Ai o caralho",
+    "inputHint": "acceptingInput",
+    "attachments": [],
+    "entities": [],
+    "replyToId": "f8b63700-fc70-11eb-8617-d1f051f8c6db",
+    "id": "f8b99260-fc70-11eb-8617-d1f051f8c6db",
+    "localTimestamp": "2021-08-13T20:59:30+01:00",
+    "timestamp": "2021-08-13T19:59:30.438Z"
+  }
+]
