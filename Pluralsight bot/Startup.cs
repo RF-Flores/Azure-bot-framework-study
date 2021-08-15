@@ -55,7 +55,7 @@ namespace Pluralsight_bot
         {
             //Create the storage we'll be using for User and Conversation state
             //services.AddSingleton<IStorage, MemoryStorage>();
-            var storageAccount = "DefaultEndpointsProtocol=https;AccountName=rfflores;AccountKey=7X+2IA9Wa9HC9BT69e9pGgGs4Xv5ZMcEWzHM4yW14wMMZ94rzfcV+epeWCDqO38VFVXDUtZG8AAeY1Vv8sHsZw==;EndpointSuffix=core.windows.net";
+            var storageAccount = Configuration["AzureBloblStorageAccount"];
             var storageContainer = "azurebotframework-statedata";
 
             services.AddSingleton<IStorage>(new BlobsStorage(storageAccount,storageContainer));
