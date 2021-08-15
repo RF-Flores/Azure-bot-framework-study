@@ -1,4 +1,5 @@
 ﻿using Microsoft.Bot.Builder;
+using Microsoft.Bot.Builder.Dialogs;
 using Pluralsight_bot.Models;
 using System;
 using System.Collections.Generic;
@@ -17,10 +18,12 @@ namespace Pluralsight_bot.Services
         //ID's
         public static string UserProfileId { get; } = $"{nameof(StateService)}.UserProfile";
         public static string ConversationDataId { get; } = $"{nameof(StateService)}.ConversationData";
+        public static string DialogStateId { get; } = $"{nameof(StateService)}.DialogState";
 
         //Accessors
         public IStatePropertyAccessor<UserProfile> UserProfileAcessor { get; set; }
         public IStatePropertyAccessor<ConversationData> ConversationDataAcessor { get; set; }
+        public IStatePropertyAccessor<DialogState> DialogStateAccessor { get; set; }
         #endregion
 
         public StateService(UserState userState, ConversationState conversationState) 
@@ -38,6 +41,9 @@ namespace Pluralsight_bot.Services
 
             //Initialize UserState
             UserProfileAcessor = UserState.CreateProperty<UserProfile>(UserProfileId);
+
+            //Intialize DialogState
+            DialogStateAccessor = ConversationState.CreateProperty<DialogState>(DialogStateId);
         }
 
     }

@@ -5,6 +5,7 @@
 
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace Pluralsight_bot
 {
@@ -20,6 +21,11 @@ namespace Pluralsight_bot
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                })
+                .ConfigureLogging((logging) =>
+                {
+                    logging.AddDebug();
+                    logging.AddConsole();
                 });
     }
 }
