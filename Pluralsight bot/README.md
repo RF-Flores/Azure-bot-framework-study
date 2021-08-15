@@ -1,6 +1,6 @@
 ﻿# Pluralsight_bot
  
->>The below readme is from the "Bot Frameowrk v4 SDK Tempaltes for Visual studio extention", Echo Bot template with .NET core 3.1<<
+>>The below readme is from the "Bot Frameowrk v4 SDK Tempaltes for Visual studio extention", Echo Bot template with .NET core 3.1
 
 Bot Framework v4 echo bot sample.
 
