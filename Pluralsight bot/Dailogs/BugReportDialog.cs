@@ -65,7 +65,7 @@ namespace Pluralsight_bot.Dailogs
 
         private async Task<DialogTurnResult> CallbackTimeStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            stepContext.Values["desciption"] = (string)stepContext.Result;
+            stepContext.Values["description"] = (string)stepContext.Result;
 
             return await stepContext.PromptAsync(_bugReportDialogNameOf + ".callbackTime", 
                 new PromptOptions 
@@ -79,7 +79,7 @@ namespace Pluralsight_bot.Dailogs
         {
             stepContext.Values["callbackTime"] = Convert.ToDateTime(((List<DateTimeResolution>)stepContext.Result).FirstOrDefault().Value);
 
-            return await stepContext.PromptAsync(_bugReportDialogNameOf + ".phonenumber",
+            return await stepContext.PromptAsync(_bugReportDialogNameOf + ".phoneNumber",
                 new PromptOptions
                 {
                     Prompt = MessageFactory.Text("Please enter a phone number that we call you back at"),
@@ -112,27 +112,24 @@ namespace Pluralsight_bot.Dailogs
             userProfile.PhoneNumber = (string)stepContext.Values["phoneNumber"];
             userProfile.Bug = (string)stepContext.Values["bug"];
 
-            var stepContextAnswersList = new List<String>
+            var stepContextAnswersList = new String[]
             {
                 userProfile.Description,
-                userProfile.CallbackTime.ToString(),
+                userProfile.CallbackTime.ToString("HH,mm"),
                 userProfile.PhoneNumber,
-                userProfile.Bug
+                userProfile.Bug,
+                Environment.NewLine
             };
 
             await stepContext.Context.SendActivityAsync(MessageFactory.Text(String.Format(
-                "Here is a summary of your bug report:" +
-                "Description: {0}" +
-                "Callback Time: {1}" +
-                "Phone Number: {2}" +
-                "Bug: {3}"
-                ,stepContextAnswersList)),cancellationToken);
+                "Here is a summary of your bug report: {4}Description: {0}{4}Callback Time: {1}{4}Phone Number: {2}{4}Bug: {3}"
+                , stepContextAnswersList)), cancellationToken);
 
             //Save data in userState
             await _stateService.UserProfileAcessor.SetAsync(stepContext.Context, userProfile);
 
             //WaterfallStep always finishes with the end of the Waterfall or with another dialog
-            return await stepContext.EndDialogAsync(cancellationToken);
+            return await stepContext.EndDialogAsync(cancellationToken: cancellationToken);
         }
         #endregion
 

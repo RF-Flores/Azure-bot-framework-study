@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 using Pluralsight_bot.Bots;
+using Pluralsight_bot.Dailogs;
 using Pluralsight_bot.Services;
 
 namespace Pluralsight_bot
@@ -37,8 +38,17 @@ namespace Pluralsight_bot
             //Configure state
             ConfigureState(services);
 
+            //Configure Dialogs
+            ConfigureDialogs(services);
+
             // Create the bot as a transient. In this case the ASP Controller is expecting an IBot.
-            services.AddTransient<IBot, GreetingBot>();
+            services.AddTransient<IBot, DialogBot<MainDialog>>();
+        }
+
+        public void ConfigureDialogs(IServiceCollection services)
+        {
+            //Add the Main dialog because we inject the MainDialog in the DialogBot
+            services.AddSingleton<MainDialog>();
         }
 
         public void ConfigureState(IServiceCollection services)
