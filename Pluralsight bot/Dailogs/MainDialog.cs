@@ -9,7 +9,7 @@ using Pluralsight_bot.Services;
 using Pluralsight_bot.Models;
 using Microsoft.Bot.Builder.Dialogs.Choices;
 using System.Text.RegularExpressions;
-
+using Pluralsight_bot.Helpers.PluralsightBot.Helpers;
 
 namespace Pluralsight_bot.Dailogs
 {
@@ -18,12 +18,14 @@ namespace Pluralsight_bot.Dailogs
         #region Variables
         private readonly StateService _stateService;
         private readonly string _mainDialogNameOf = nameof(MainDialog);
+        private readonly BotServices _botServices;
         #endregion
 
         #region Constructors
-        public MainDialog(StateService stateService)
+        public MainDialog(StateService stateService, BotServices botServices)
         {
             _stateService = stateService ?? throw new ArgumentNullException(nameof(stateService));
+            _botServices = botServices ?? throw new ArgumentNullException(nameof(botServices));
 
             InitializeWaterfallDialog();
         }
@@ -51,14 +53,59 @@ namespace Pluralsight_bot.Dailogs
         #region WaterFall steps
         private async Task<DialogTurnResult> InitialStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            if (Regex.Match(stepContext.Context.Activity.Text.ToLower(), "hi").Success)
+            try
             {
-                return await stepContext.BeginDialogAsync(_mainDialogNameOf + ".greeting", null, cancellationToken);
+                //First, we uuse the dispatch model to determine which cognitive server (LUIS or QnA) to use.
+                var recognizerResult = await _botServices.Dispatch.RecognizeAsync<LuisModel>(stepContext.Context, cancellationToken);
+
+                //Top intent tell us which cognitive service to use.
+                var topIntent = recognizerResult.TopIntent();
+
+                switch (topIntent.intent)
+                {
+                    case LuisModel.Intent.GreetingIntent:
+                        return await stepContext.BeginDialogAsync(_mainDialogNameOf + ".greeting", null, cancellationToken);
+                    case LuisModel.Intent.NewBugReportIntent:
+                        var userProfile = new UserProfile();
+                        var bugReport = recognizerResult.Entities.BugReport_ML?.FirstOrDefault();
+                        if (bugReport != null)
+                        {
+                            var description = bugReport.Description?.FirstOrDefault();
+                            if (description != null)
+                            {
+                                //Retrieve Description Text
+                                userProfile.Description = bugReport._instance.Description?.FirstOrDefault() != null ? bugReport._instance.Description.FirstOrDefault(): userProfile.Description;
+
+                                //Retrieve Bug Text
+                                var bugOuter = description.Bug?.FirstOrDefault();
+                                if (bugOuter != null)
+                                {
+                                    userProfile.Bug = bugOuter?.FirstOrDefault() != null ? bugOuter?.FirstOrDefault() : userProfile.Bug;
+                                }
+                            }
+
+                            // Retrieve Phone Number Text
+                            userProfile.PhoneNumber = bugReport.PhoneNumber?.FirstOrDefault() != null ? bugReport.PhoneNumber?.FirstOrDefault() : userProfile.PhoneNumber;
+
+                            //Retrieve Callback Time
+                            userProfile.CallbackTime = bugReport.CallbackTime?.FirstOrDefault() != null ? AiRecognizer.RecognizeDateTime(bugReport.CallbackTime?.FirstOrDefault(), out string rawString) : userProfile.CallbackTime;
+                        }
+
+                        return await stepContext.BeginDialogAsync(_mainDialogNameOf + ".bugReport", userProfile, cancellationToken);
+                    case LuisModel.Intent.QueryBugTypeIntent:
+                        return await stepContext.BeginDialogAsync(_mainDialogNameOf + ".bugType", null, cancellationToken);
+                    default:
+                        await stepContext.Context.SendActivityAsync(MessageFactory.Text($"I'm sorry, I don't know what you mean."), cancellationToken);
+                        break;
+                }
             }
-            else
+            catch (Exception e)
             {
-                return await stepContext.BeginDialogAsync(_mainDialogNameOf + ".bugReport", null, cancellationToken);
+                Console.WriteLine(e);
+                throw;
             }
+
+            return await stepContext.NextAsync(null, cancellationToken);
         }
 
         private async Task<DialogTurnResult> FinalStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
