@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.Bot.Builder.AI.Luis;
 using Microsoft.Extensions.Configuration;
+using Pluralsight_bot.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,8 +15,8 @@ namespace Pluralsight_bot.Services
         {
             //Read the setting for cognitive services (LUIS,QnA) from the appsettings.json
             var luisApplication = new LuisApplication(
-                configuration["LuisAppId"],
-                configuration["LuisAPIKey"],
+                configuration[AppSettingsPropertiesEnum.LuisAppId.ToString()],
+                configuration[AppSettingsPropertiesEnum.LuisAPIKey.ToString()],
                 $"https://{configuration["LuisAPIHostname"]}.api.cognitive.microsoft.com");
 
             var recognizerOptions = new LuisRecognizerOptionsV3(luisApplication)
@@ -24,7 +25,7 @@ namespace Pluralsight_bot.Services
                 {
                     IncludeAllIntents = true,
                     IncludeInstanceData = true,
-                    Slot = configuration["LuisSlot"]
+                    Slot = configuration[AppSettingsPropertiesEnum.LuisSlot.ToString()]
                 }
             };
 

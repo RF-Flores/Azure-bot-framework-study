@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using Pluralsight_bot.Bots;
 using Pluralsight_bot.Dailogs;
 using Pluralsight_bot.Services;
+using Pluralsight_bot.Utils;
 
 namespace Pluralsight_bot
 {
@@ -55,7 +56,7 @@ namespace Pluralsight_bot
         {
             //Create the storage we'll be using for User and Conversation state
             //services.AddSingleton<IStorage, MemoryStorage>();
-            var storageAccount = Configuration["AzureBloblStorageAccount"];
+            var storageAccount = Configuration[AppSettingsPropertiesEnum.AzureBlobStorageAccount.ToString()];
             var storageContainer = "azurebotframework-statedata";
 
             services.AddSingleton<IStorage>(new BlobsStorage(storageAccount,storageContainer));
