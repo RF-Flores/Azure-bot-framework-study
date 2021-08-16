@@ -47,7 +47,8 @@ namespace Pluralsight_bot.Models
             }
             public class DescriptionClass
             {
-                public string[] Bug;
+                //This was not correctly generated with the tools for some reason, should have created a jagged array but only generated  a single dimension array
+                public string[][] Bug;
                 [JsonProperty("$instance")]
                 public _InstanceDescription _instance;
             }
