@@ -66,6 +66,11 @@ namespace Pluralsight_bot.Dailogs
                 {
                     case LuisModel.Intent.GreetingIntent:
                         return await stepContext.BeginDialogAsync(_mainDialogNameOf + ".greeting", null, cancellationToken);
+                    // For the bug report:
+                    // First LUIS recognized all the elements from the chat, if its a bug report, bug type, phone, callback time
+                    // Second it populates the user profile
+                    // Third, call the bug report dialog in which if any field  is not populated, the bot will prompt the user for the details
+                    // Finally it shows the summary to the user
                     case LuisModel.Intent.NewBugReportIntent:
                         var userProfile = new UserProfile();
                         var bugReport = recognizerResult.Entities.BugReport_ML?.FirstOrDefault();
