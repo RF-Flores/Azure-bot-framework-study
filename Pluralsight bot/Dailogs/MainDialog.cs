@@ -18,14 +18,14 @@ namespace Pluralsight_bot.Dailogs
         #region Variables
         private readonly StateService _stateService;
         private readonly string _mainDialogNameOf = nameof(MainDialog);
-        private readonly BotServices _botServices;
+        private readonly BotServices _botService;
         #endregion
 
         #region Constructors
         public MainDialog(StateService stateService, BotServices botServices)
         {
             _stateService = stateService ?? throw new ArgumentNullException(nameof(stateService));
-            _botServices = botServices ?? throw new ArgumentNullException(nameof(botServices));
+            _botService = botServices ?? throw new ArgumentNullException(nameof(botServices));
 
             InitializeWaterfallDialog();
         }
@@ -44,6 +44,7 @@ namespace Pluralsight_bot.Dailogs
             // Add Name Dialogs
             AddDialog(new GreetingDialog(_mainDialogNameOf + ".greeting", _stateService));
             AddDialog(new BugReportDialog(_mainDialogNameOf + ".bugReport", _stateService));
+            AddDialog(new BugTypeDialog(_mainDialogNameOf + ".bugType", _botService));
             AddDialog(new WaterfallDialog(_mainDialogNameOf + ".mainFlow", waterfallSteps));
 
             // Set the starting Dialog
@@ -56,7 +57,7 @@ namespace Pluralsight_bot.Dailogs
             try
             {
                 //First, we uuse the dispatch model to determine which cognitive server (LUIS or QnA) to use.
-                var recognizerResult = await _botServices.Dispatch.RecognizeAsync<LuisModel>(stepContext.Context, cancellationToken);
+                var recognizerResult = await _botService.Dispatch.RecognizeAsync<LuisModel>(stepContext.Context, cancellationToken);
 
                 //Top intent tell us which cognitive service to use.
                 var topIntent = recognizerResult.TopIntent();
@@ -74,13 +75,13 @@ namespace Pluralsight_bot.Dailogs
                             if (description != null)
                             {
                                 //Retrieve Description Text
-                                userProfile.Description = bugReport._instance.Description?.FirstOrDefault() != null ? bugReport._instance.Description.FirstOrDefault(): userProfile.Description;
+                                userProfile.Description = bugReport._instance.Description?.FirstOrDefault() != null ? bugReport._instance.Description.FirstOrDefault().Text: userProfile.Description;
 
                                 //Retrieve Bug Text
                                 var bugOuter = description.Bug?.FirstOrDefault();
                                 if (bugOuter != null)
                                 {
-                                    userProfile.Bug = bugOuter?.FirstOrDefault() != null ? bugOuter?.FirstOrDefault() : userProfile.Bug;
+                                    userProfile.Bug = bugOuter?.FirstOrDefault() != null ? bugOuter?.FirstOrDefault().ToString() : userProfile.Bug;
                                 }
                             }
 

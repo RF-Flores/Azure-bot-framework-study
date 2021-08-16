@@ -36,6 +36,9 @@ namespace Pluralsight_bot
             // Create the Bot Framework Adapter with error handling enabled.
             services.AddSingleton<IBotFrameworkHttpAdapter, AdapterWithErrorHandler>();
 
+            // Create the Bot service
+            services.AddSingleton<BotServices>();
+
             //Configure state
             ConfigureState(services);
 
